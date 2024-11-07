@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull the Nginx Docker image
+      community.docker.docker_image:
+        name: nginx
+        source: pull
+        tag: latest
+        state: present
